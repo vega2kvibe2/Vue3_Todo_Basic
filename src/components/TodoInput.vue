@@ -1,7 +1,9 @@
 <template>
-    <div>
-        <input type="text" autofocus :value="newTodoItem" @input="handleInput">
-        <button @click="addTodo">추가</button>
+    <div class="inputBox shadow">
+        <input type="text" autofocus :value="newTodoItem" @input="handleInput" @keyup.enter="addTodo">
+        <span class="addContainer" @click="addTodo">
+            <i class="fas fa-plus addBtn"></i>
+        </span>
     </div>
 </template>``
 
