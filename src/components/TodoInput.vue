@@ -10,7 +10,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const emit = defineEmits(["input:todo"])
+const emit = defineEmits(["input:todo", "add:todo"])
 
 const newTodoItem = ref("")
 
@@ -21,10 +21,11 @@ const handleInput = (event) => {
     newTodoItem.value = todoText
 }
 const addTodo = () => {
-    const todoItem = newTodoItem.value
-    const todoItemObj = {completed: false, item:todoItem}
-    localStorage.setItem(todoItem, JSON.stringify(todoItemObj))
-    clearInput()
+    if (newTodoItem.value !== "") {
+        const todoItemStr = newTodoItem.value
+        emit("add:todo", todoItemStr)
+        clearInput()
+    }
 }
 
 const clearInput = () => {

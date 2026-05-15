@@ -5,7 +5,7 @@ import TodoList from './components/TodoList.vue'
 import TodoFooter from './components/TodoFooter.vue'
 import { reactive, onBeforeMount } from "vue"
 
-export default {    
+export default {
     components: {
         TodoHeader, TodoInput, TodoList, TodoFooter
     },
@@ -23,7 +23,15 @@ export default {
                 } //for
             } //if
         });
-        return { todoItems };
+
+        const addTodo = (todoItemStr) => {
+            const todoItemObj = { completed: false, item: todoItemStr };
+            localStorage.setItem(todoItemStr, JSON.stringify(todoItemObj));
+            todoItems.push(todoItemObj);
+        };//addTodo
+
+        return { todoItems, addTodo };
+
     }, //setup
 
 
@@ -34,7 +42,7 @@ export default {
 <template>
     <div id="app">
         <TodoHeader></TodoHeader>
-        <TodoInput></TodoInput>
+        <TodoInput @add:todo="addTodo"></TodoInput>
         <TodoList :todo-list="todoItems"></TodoList>
         <TodoFooter></TodoFooter>
     </div>
