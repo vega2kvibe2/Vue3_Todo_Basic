@@ -34,6 +34,7 @@ export default {
             localStorage.removeItem(todoItemStr);
             todoItems.splice(index, 1);
         };
+
         const toggleComplete = (todoObj, index) => {
             const { item, completed } = todoObj;
             todoItems[index].completed = !completed;
@@ -53,7 +54,7 @@ export default {
     <div id="app">
         <TodoHeader></TodoHeader>
         <TodoInput @add:todo="addTodo"></TodoInput>
-        <TodoList :todo-list="todoItems" @remove:todo="removeTodo"></TodoList>
+        <TodoList :todo-list="todoItems" @remove:todo="removeTodo" @toggle:todo="toggleComplete"></TodoList>
         <TodoFooter></TodoFooter>
     </div>
 </template>
