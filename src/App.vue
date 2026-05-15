@@ -39,10 +39,15 @@ export default {
             const { item, completed } = todoObj;
             todoItems[index].completed = !completed;
             localStorage.removeItem(item);
-            localStorage.setItem(item,JSON.stringify(todoItems[index]));
+            localStorage.setItem(item, JSON.stringify(todoItems[index]));
         };
 
-        return { todoItems, addTodo, removeTodo, toggleComplete };
+        const clearTodo = () => {
+            localStorage.clear()
+            todoItems.splice(0)
+        }
+
+        return { todoItems, addTodo, removeTodo, toggleComplete, clearTodo };
     }, //setup
 
 
@@ -55,7 +60,7 @@ export default {
         <TodoHeader></TodoHeader>
         <TodoInput @add:todo="addTodo"></TodoInput>
         <TodoList :todo-list="todoItems" @remove:todo="removeTodo" @toggle:todo="toggleComplete"></TodoList>
-        <TodoFooter></TodoFooter>
+        <TodoFooter @clear:todo="clearTodo"></TodoFooter>
     </div>
 </template>
 
