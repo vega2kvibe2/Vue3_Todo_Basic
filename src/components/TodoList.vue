@@ -1,9 +1,9 @@
 <template>
     <div>
         <ul>
-            <li v-for="(item, index) in todoItems" :key="index" class="shadow">
-                {{ item }}
-                <span class="removeBtn" @click="removeTodo(item, index)">
+            <li v-for="(todo, index) in todoItems" :key="index" class="shadow">
+                <span class="textCompleted">{{todo.item}}</span>
+                <span class="removeBtn" @click="removeTodo(todo.item, index)">
                     <i class="fas fa-trash-alt"></i>
                 </span>
             </li>
@@ -20,7 +20,8 @@ onBeforeMount(() => {
     if (localStorage.length > 0) {
         for (var i = 0; i < localStorage.length; i++) {
             const storageKey = localStorage.key(i)
-            todoItems.value.push(storageKey)
+            const itemJson = localStorage.getItem(storageKey);
+            todoItems.value.push(JSON.parse(itemJson));
         }
     }
     console.log(todoItems.value)
