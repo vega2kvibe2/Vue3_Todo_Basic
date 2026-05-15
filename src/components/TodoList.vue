@@ -3,7 +3,7 @@
         <ul>
             <li v-for="(todo, index) in props.todoList" :key="index" class="shadow">
                 <i class="fas fa-check checkBtn" :class="{ checkBtnCompleted: todo.completed }" 
-                    @click="toggleComplete(todo)" ></i>
+                    @click="toggleComplete(todo,index)" ></i>
                 <span :class="{ textCompleted: todo.completed }">{{ todo.item }}</span>
                 <span class="removeBtn" @click="removeTodo(todo.item, index)">
                     <i class="fas fa-trash-alt"></i>
@@ -17,18 +17,14 @@
 import { ref } from 'vue'
 
 const props = defineProps(['todoList'])
-
-const todoItems = ref([])
+const emit = defineEmits(["remove:todo","toggle:todo"])
 
 const removeTodo = (todoItem, index) => {
-    localStorage.removeItem(todoItem)
-    todoItems.value.splice(index, 1)
+    emit("remove:todo", todoItem, index)
 }
 
-const toggleComplete = (todoItem) => {
-    todoItem.completed = !todoItem.completed;
-    localStorage.removeItem(todoItem.item);
-    localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+const toggleComplete = (todoObj, index) => {
+    emit("toggle:todo", todoObj, index)
 }
 
 </script>
